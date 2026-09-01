@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrostatics Reasoning Test — 30 Minutes</title>
+  <style>
+    :root { --navy:#15324b; --blue:#1f6f9f; --pale:#eef6fa; --ink:#17212b; --ok:#1b7f4b; --bad:#b43b3b; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:#f3f5f7; color:var(--ink); font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    header { background:linear-gradient(120deg,var(--navy),var(--blue)); color:white; padding:26px 20px; }
+    header .wrap, main { max-width:900px; margin:auto; }
+    h1 { margin:0 0 6px; font-size:1.8rem; }
+    .meta { opacity:.92; }
+    .timer { position:sticky; top:0; z-index:5; background:#fff; border-bottom:1px solid #ccd5dc; padding:10px 20px; box-shadow:0 2px 7px #0001; }
+    .timer-inner { max-width:900px; margin:auto; display:flex; justify-content:space-between; align-items:center; gap:15px; }
+    #clock { font-size:1.35rem; font-weight:750; color:var(--navy); font-variant-numeric:tabular-nums; }
+    main { padding:22px 16px 50px; }
+    .instructions { background:var(--pale); border-left:5px solid var(--blue); padding:14px 18px; border-radius:7px; }
+    .question { background:white; margin:18px 0; padding:20px; border-radius:10px; border:1px solid #dce2e7; box-shadow:0 2px 6px #0000000c; }
+    .question h2 { margin:0 0 10px; font-size:1.08rem; color:var(--navy); }
+    .equation { text-align:center; font-family:"Cambria Math","Times New Roman",serif; font-size:1.08rem; margin:10px; }
+    label.option { display:block; margin:8px 0; padding:9px 11px; border:1px solid #d6dde2; border-radius:7px; cursor:pointer; }
+    label.option:hover { background:#f6fafc; border-color:#8eb8d0; }
+    input[type=radio] { margin-right:9px; }
+    button { border:0; border-radius:8px; padding:11px 17px; font-weight:700; cursor:pointer; }
+    #submit { background:var(--navy); color:white; font-size:1rem; }
+    #submit:hover { background:var(--blue); }
+    #result { display:none; margin-top:20px; padding:18px; border-radius:9px; background:white; border:2px solid var(--blue); }
+    .justification { margin-top:15px; padding-top:13px; border-top:1px dashed #aebbc5; }
+    .justification label { display:block; font-weight:700; color:var(--navy); margin-bottom:6px; }
+    .justification textarea { width:100%; min-height:92px; resize:vertical; padding:10px; border:1px solid #aebbc5; border-radius:7px; font:inherit; }
+    .justification textarea:focus { outline:2px solid #8ec7e5; border-color:var(--blue); }
+    #instructor { display:none; margin-top:18px; padding:18px; background:#fff8e8; border:1px solid #d9b45b; border-radius:9px; }
+    .score-row { display:grid; grid-template-columns:1fr 150px 150px; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid #ead9aa; }
+    .score-row select { padding:7px; border-radius:6px; }
+    .points { font-variant-numeric:tabular-nums; text-align:right; }
+    #calculate { background:#825f0d; color:white; margin-top:14px; }
+    .formula { font-family:"Cambria Math","Times New Roman",serif; font-size:1.06rem; text-align:center; margin:9px 0; }
+    .correct { border-color:var(--ok)!important; background:#effaf4!important; }
+    .incorrect { border-color:var(--bad)!important; background:#fff2f2!important; }
+    .explanation { display:none; margin-top:10px; padding:10px 12px; background:#f7f8f9; border-radius:6px; font-size:.94rem; }
+    footer { text-align:center; color:#60707b; margin-top:25px; font-size:.9rem; }
+    @media (max-width:620px) { .score-row { grid-template-columns:1fr; } .points { text-align:left; } }
+    @media print { .timer, #submit, #calculate { display:none!important; } body { background:white; } .question { break-inside:avoid; box-shadow:none; } }
+  </style>
+</head>
+<body>
+  <header><div class="wrap">
+    <h1>Electrostatics Reasoning Test</h1>
+    <div class="meta">Discrete charges · Dirac delta · electric potential · Green function · Gauss’s law</div>
+  </div></header>
+  <div class="timer"><div class="timer-inner"><strong>Time remaining</strong><span id="clock">30:00</span></div></div>
+  <main>
+    <section class="instructions">
+      <strong>Instructions:</strong> Answer all 10 questions and justify every choice. Choose the most complete statement, not merely one that is true in a special case. The alternatives contribute 20% and the written justifications contribute 80% of the final result.
+      <div class="formula">Question score: Sᵢ = 0.2Aᵢ + 0.8(Jᵢ/5)</div>
+      Here, Aᵢ=1 for a correct alternative and Aᵢ=0 otherwise; the instructor evaluates each justification with Jᵢ from 1 to 5. The final score is the sum of the ten question scores, so it is reported out of 10.
+    </section>
+    <form id="quiz">
+      <section class="question" data-answer="b">
+        <h2>1. Opposite charges and charge density</h2>
+        <p>Charges +q and −q are at distinct positions <i>r</i><sub>1</sub> and <i>r</i><sub>2</sub>. What follows from their zero total charge?</p>
+        <div class="equation">ρ(r) = qδ³(r−r₁) − qδ³(r−r₂)</div>
+        <label class="option"><input type="radio" name="q1" value="a">a) The charge density and electric field vanish everywhere.</label>
+        <label class="option"><input type="radio" name="q1" value="b">b) The integral of ρ over all space is zero, but ρ and E are generally nonzero.</label>
+        <label class="option"><input type="radio" name="q1" value="c">c) The two delta distributions cancel even though their supports differ.</label>
+        <label class="option"><input type="radio" name="q1" value="d">d) Gauss’s law cannot describe a distribution containing a negative charge.</label>
+        <div class="explanation">Zero total charge is a global statement. Delta distributions at distinct points do not cancel locally; the configuration is a dipole and generally produces a nonzero field.</div>
+      </section>
+
+      <section class="question" data-answer="c">
+        <h2>2. What a measurement over a subvolume detects</h2>
+        <p>For ρ(r)=3qδ³(r−r₁)−2qδ³(r−r₂), a volume V contains r₂ but not r₁. What is ∫<sub>V</sub>ρ dτ?</p>
+        <label class="option"><input type="radio" name="q2" value="a">a) +q</label>
+        <label class="option"><input type="radio" name="q2" value="b">b) +3q</label>
+        <label class="option"><input type="radio" name="q2" value="c">c) −2q</label>
+        <label class="option"><input type="radio" name="q2" value="d">d) −5q</label>
+        <div class="explanation">The selection property includes only delta distributions whose support lies inside V; therefore the enclosed charge is −2q.</div>
+      </section>
+
+      <section class="question" data-answer="d">
+        <h2>3. Potential of a uniformly charged disk</h2>
+        <p>A uniform disk lies in the xy-plane. At an arbitrary observation point, which conclusion is most accurate?</p>
+        <label class="option"><input type="radio" name="q3" value="a">a) The potential depends only on z everywhere.</label>
+        <label class="option"><input type="radio" name="q3" value="b">b) Rotational symmetry makes the potential constant throughout space.</label>
+        <label class="option"><input type="radio" name="q3" value="c">c) The potential is zero at every point where z=0.</label>
+        <label class="option"><input type="radio" name="q3" value="d">d) The potential has the form φ(s,z), where s=√(x²+y²); only on the axis does it reduce to a simple elementary integral.</label>
+        <div class="explanation">Axial symmetry removes dependence on the azimuthal angle, not on the cylindrical radius s. Off-axis evaluation generally involves elliptic integrals.</div>
+      </section>
+
+      <section class="question" data-answer="a">
+        <h2>4. Potential versus field at a charged surface</h2>
+        <p>For an ideal disk with nonzero surface density σ, what happens when one crosses the disk away from its edge?</p>
+        <label class="option"><input type="radio" name="q4" value="a">a) φ is continuous, but the normal component of E has a jump σ/ε₀.</label>
+        <label class="option"><input type="radio" name="q4" value="b">b) Both φ and every component of E must be continuous.</label>
+        <label class="option"><input type="radio" name="q4" value="c">c) φ jumps by σ/ε₀, while E remains continuous.</label>
+        <label class="option"><input type="radio" name="q4" value="d">d) Both φ and E become infinite at every point of the disk.</label>
+        <div class="explanation">A finite surface charge does not make the potential discontinuous. The boundary condition is Eₙ⁺−Eₙ⁻=σ/ε₀.</div>
+      </section>
+
+      <section class="question" data-answer="c">
+        <h2>5. Green function and pair counting</h2>
+        <p>Why does the continuous electrostatic energy contain the factor 1/2?</p>
+        <div class="equation">U = ½ ∬ ρ(r)G(r,r′)ρ(r′) dτ dτ′</div>
+        <label class="option"><input type="radio" name="q5" value="a">a) Because only half of space contains charge.</label>
+        <label class="option"><input type="radio" name="q5" value="b">b) Because the free-space Green function is half the Coulomb potential.</label>
+        <label class="option"><input type="radio" name="q5" value="c">c) Because the double integral counts the interaction of each pair twice.</label>
+        <label class="option"><input type="radio" name="q5" value="d">d) Because positive and negative charge contributions always cancel by half.</label>
+        <div class="explanation">The ordered contributions (r,r′) and (r′,r) represent the same physical pair, so the factor 1/2 removes double counting.</div>
+      </section>
+
+      <section class="question" data-answer="b">
+        <h2>6. Point charges and self-energy</h2>
+        <p>When ρ is replaced by a sum of Dirac deltas in the Green-function energy, why are terms with i=j excluded?</p>
+        <label class="option"><input type="radio" name="q6" value="a">a) A charge cannot interact with charges of the same sign.</label>
+        <label class="option"><input type="radio" name="q6" value="b">b) G(rᵢ,rᵢ) is singular and represents the divergent self-energy of an ideal point charge.</label>
+        <label class="option"><input type="radio" name="q6" value="c">c) The Dirac delta is zero at the charge position.</label>
+        <label class="option"><input type="radio" name="q6" value="d">d) Gauss’s law requires the total energy to be zero.</label>
+        <div class="explanation">The Coulomb Green function behaves as 1/|r−r′| and diverges at coincident points. The finite interaction energy retains only i≠j terms.</div>
+      </section>
+
+      <section class="question" data-answer="d">
+        <h2>7. What “closed boundary” means</h2>
+        <p>A Gaussian cylinder has a lateral surface and two circular caps. Which flux must appear in Gauss’s law?</p>
+        <label class="option"><input type="radio" name="q7" value="a">a) Only the lateral flux, regardless of the field.</label>
+        <label class="option"><input type="radio" name="q7" value="b">b) Only the flux through the cap with positive normal.</label>
+        <label class="option"><input type="radio" name="q7" value="c">c) Whichever surface contribution is easiest to calculate.</label>
+        <label class="option"><input type="radio" name="q7" value="d">d) The sum of the fluxes through the lateral surface and both caps, each with its outward normal.</label>
+        <div class="explanation">The boundary ∂V is the union of every surface piece enclosing V. Symmetry may make some contributions zero, but they still belong to the closed-boundary integral.</div>
+      </section>
+
+      <section class="question" data-answer="a">
+        <h2>8. External charges and net flux</h2>
+        <p>A charge outside a closed surface produces a nonzero electric field on that surface. What is its contribution to the net flux?</p>
+        <label class="option"><input type="radio" name="q8" value="a">a) Zero net contribution: its field lines enter and leave the closed surface.</label>
+        <label class="option"><input type="radio" name="q8" value="b">b) q/ε₀ because it produces a field on the surface.</label>
+        <label class="option"><input type="radio" name="q8" value="c">c) Always positive because electric flux has no sign.</label>
+        <label class="option"><input type="radio" name="q8" value="d">d) Undefined unless the closed surface is spherical.</label>
+        <div class="explanation">External charges affect E point by point, but their total flux through a closed boundary is zero because no source from them lies within V.</div>
+      </section>
+
+      <section class="question" data-answer="c">
+        <h2>9. Divergence theorem as the bridge</h2>
+        <p>Which chain correctly converts local Gauss’s law into its integral form?</p>
+        <label class="option"><input type="radio" name="q9" value="a">a) ∮<sub>∂V</sub>E·dℓ = ∫<sub>V</sub>(∇×E)dτ = Q<sub>enc</sub>/ε₀</label>
+        <label class="option"><input type="radio" name="q9" value="b">b) ∮<sub>∂V</sub>E·dA = ∫<sub>V</sub>(∇×E)dτ</label>
+        <label class="option"><input type="radio" name="q9" value="c">c) ∮<sub>∂V</sub>E·dA = ∫<sub>V</sub>(∇·E)dτ = (1/ε₀)∫<sub>V</sub>ρ dτ</label>
+        <label class="option"><input type="radio" name="q9" value="d">d) ∫<sub>V</sub>E dτ = ∮<sub>∂V</sub>ρ dA</label>
+        <div class="explanation">The divergence theorem converts outward flux through ∂V into the volume integral of ∇·E; Maxwell’s equation then replaces ∇·E with ρ/ε₀.</div>
+      </section>
+
+      <section class="question" data-answer="b">
+        <h2>10. Zero enclosed charge: the subtle conclusion</h2>
+        <p>A closed surface encloses equal positive and negative charges. Which conclusion necessarily follows?</p>
+        <label class="option"><input type="radio" name="q10" value="a">a) E=0 at every point on the surface.</label>
+        <label class="option"><input type="radio" name="q10" value="b">b) ∮<sub>∂V</sub>E·dA=0, although E may be nonzero and nonuniform on the surface.</label>
+        <label class="option"><input type="radio" name="q10" value="c">c) The electric potential is zero everywhere outside the surface.</label>
+        <label class="option"><input type="radio" name="q10" value="d">d) Both ∇·E and E vanish at every point inside V.</label>
+        <div class="explanation">Gauss’s law fixes the net flux, not the field at each surface point. Positive and negative flux contributions can cancel.</div>
+      </section>
+
+      <button type="button" id="submit">Submit alternatives and justifications</button>
+      <section id="result" aria-live="polite"></section>
+      <section id="instructor">
+        <h2>Instructor evaluation</h2>
+        <p>Assign a justification score from 1 to 5 for every question. The alternative component is calculated automatically.</p>
+        <div id="scoreRows"></div>
+        <button type="button" id="calculate">Calculate final score</button>
+        <div id="finalScore" aria-live="polite"></div>
+      </section>
+    </form>
+    <footer>CFIS 344 · Suggested duration: 30 minutes · 10 questions</footer>
+  </main>
+  <script>
+    let remaining = 30 * 60;
+    let submitted = false;
+    const clock = document.getElementById('clock');
+    const questions = [...document.querySelectorAll('.question')];
+    questions.forEach((q, i) => {
+      const explanation = q.querySelector('.explanation');
+      const box = document.createElement('div');
+      box.className = 'justification';
+      box.innerHTML = `<label for="justification${i+1}">Justify your answer:</label><textarea id="justification${i+1}" name="justification${i+1}" required placeholder="Explain the physical or mathematical reason for your choice. Use equations when appropriate."></textarea>`;
+      q.insertBefore(box, explanation);
+    });
+    function updateClock() {
+      const m = Math.floor(remaining / 60).toString().padStart(2,'0');
+      const s = (remaining % 60).toString().padStart(2,'0');
+      clock.textContent = `${m}:${s}`;
+      if (remaining <= 300) clock.style.color = '#b43b3b';
+    }
+    const timer = setInterval(() => {
+      if (submitted) return clearInterval(timer);
+      remaining--;
+      updateClock();
+      if (remaining <= 0) { clearInterval(timer); grade(true); }
+    }, 1000);
+    function grade(timeExpired=false) {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timer);
+      let correct = 0, unanswered = 0, missingJustifications = 0;
+      questions.forEach((q, i) => {
+        const chosen = q.querySelector(`input[name="q${i+1}"]:checked`);
+        const written = q.querySelector('textarea');
+        q.querySelectorAll('input, textarea').forEach(x => x.disabled = true);
+        if (!chosen) unanswered++;
+        else if (chosen.value === q.dataset.answer) correct++;
+        if (!written.value.trim()) missingJustifications++;
+      });
+      const result = document.getElementById('result');
+      result.style.display = 'block';
+      result.innerHTML = `<h2>${timeExpired ? 'Time expired — ' : ''}Responses submitted</h2><p>Alternative result recorded: <strong>${correct}/10</strong>, contributing <strong>${(correct*0.2).toFixed(1)}/2.0 points</strong> to the final score.</p><p>${unanswered ? `${unanswered} alternative(s) unanswered. ` : ''}${missingJustifications ? `${missingJustifications} justification(s) left blank. ` : ''}The final score remains pending until the written work is evaluated.</p>`;
+      buildInstructorPanel();
+      result.scrollIntoView({behavior:'smooth'});
+    }
+    function buildInstructorPanel() {
+      const panel = document.getElementById('instructor');
+      const rows = document.getElementById('scoreRows');
+      rows.innerHTML = questions.map((q, i) => {
+        const chosen = q.querySelector(`input[name="q${i+1}"]:checked`);
+        const alt = chosen && chosen.value === q.dataset.answer ? 0.2 : 0;
+        return `<div class="score-row" data-alt="${alt}"><strong>Question ${i+1}</strong><label>Justification: <select class="jscore"><option value="">Select 1–5</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label><span class="points">Pending</span></div>`;
+      }).join('');
+      panel.style.display = 'block';
+    }
+    function calculateFinal() {
+      const rows = [...document.querySelectorAll('.score-row')];
+      if (rows.some(row => !row.querySelector('.jscore').value)) {
+        document.getElementById('finalScore').innerHTML = '<p><strong>Please evaluate all ten justifications.</strong></p>';
+        return;
+      }
+      let total = 0;
+      rows.forEach(row => {
+        const alt = Number(row.dataset.alt);
+        const justification = Number(row.querySelector('.jscore').value);
+        const points = alt + 0.8 * justification / 5;
+        total += points;
+        row.querySelector('.points').textContent = `${points.toFixed(2)} / 1.00`;
+      });
+      document.getElementById('finalScore').innerHTML = `<h2>Final score: ${total.toFixed(2)} / 10.00</h2><p>Alternative component: ${(rows.reduce((s,r)=>s+Number(r.dataset.alt),0)).toFixed(1)} / 2.0 · Justification component: ${(total-rows.reduce((s,r)=>s+Number(r.dataset.alt),0)).toFixed(2)} / 8.0</p>`;
+    }
+    document.getElementById('submit').addEventListener('click', () => grade(false));
+    document.getElementById('calculate').addEventListener('click', calculateFinal);
+    updateClock();
+  </script>
+</body>
+</html>
